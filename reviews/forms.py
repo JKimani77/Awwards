@@ -6,4 +6,8 @@ class CreateProfileForm(ModelForm):
     class Meta:
         model = Profile
         exclude = ['user']
-        
+
+class NewProjectForm(ModelForm):
+    class Meta:
+        model = Project
+        exclude = ['profile', 'pub_date', 'voters', 'design_score','usability_score','content_score','average_design','average_usability','average_score']
