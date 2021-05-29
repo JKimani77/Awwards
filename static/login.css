@@ -1,0 +1,41 @@
+.signupbox {
+    position: absolute;
+    top: -15%;
+    left: 5%;
+    background: #444;
+    width: 49%;
+    height: 130%;
+    border-radius: 5px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, .1);
+    transition: all 0.5s ease-in-out;
+    z-index: 2;
+    padding: 2%;
+}
+.rightbox {
+    position: absolute;
+    width: 50%;
+    transition: 1s all ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.leftbox {
+    left: -2%;
+}
+.image{
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    top: 46%;
+    text-align: center;
+    opacity: 0.7;
+}
+h1 {
+    text-align: center;
+    margin-top: 6rem;
+    text-transform: uppercase;
+    color: #b9a8a8;
+    font-size: 2em;
+    letter-spacing: 8px;
+}
