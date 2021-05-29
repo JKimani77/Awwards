@@ -13,6 +13,11 @@ def index(request):
     if len(projects)>=1:
         votes = Vote.get_project_votes
         high_votes = votes[:3]
-        
+
     return render(request, 'index.html', {'date': date, 'title': title, "projects":projects,})
 
+def create_profile(request):
+    current_user = request.user
+    title = 'Create Profile'
+    #if request.method =='POST':
+    return render(request, 'create_profile.html')
