@@ -5,6 +5,7 @@ import datetime as dt
 from .models import Profile, Project, Vote
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -93,4 +94,25 @@ def search_project(request):
             message = "You haven't searched"
             return render(request, 'search.html', {"message": message})
 
-
+@login_required(login_url='/accounts/login/')
+def rating_project(request,project_id):
+    if request.method =="POST":
+        form = RatingProjectForm(request.POST)
+        project = Project.objects.get(pk = project_id)
+        current_user = request.user
+        try:
+            user = User.objects.get(pk = current_user.id)
+            profile = Profile.objects.get(user = user)
+        except Profile.DoesNotExist:
+            raise Http404()
+        
+        if form.is_valid():
+            vote = form.save(commit=False)
+            vote.voter = profile
+            vote.project = project
+            vote.save_vote()
+            return HttpResponseRedirect(reverse('project', args =[int(project_id)]))
+    else:
+        form = RatingProjectForm()
+    return render(request, 'project.html', {'form':form})
+    
