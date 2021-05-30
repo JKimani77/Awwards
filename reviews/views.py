@@ -1,5 +1,5 @@
 from django.http.response import Http404, HttpResponseRedirect
-from reviews.forms import CreateProfileForm, NewProjectForm
+from reviews.forms import CreateProfileForm, NewProjectForm, RatingProjectForm
 from django.shortcuts import render, redirect
 import datetime as dt
 from .models import Profile, Project, Vote
@@ -70,3 +70,27 @@ def add_project(request):
     else:
         form = NewProjectForm()
     return render(request, 'add_new_project.html', {'form': form})
+
+@login_required(login_url='/accounts/login/')
+def search_project(request):
+    if "project" in request.GET and request.GET["project"]:
+        searched_project = request.GET.get("project")
+        voted = False
+        try:
+            projects = Project.search_project(searched_project)
+            number = projects.number()
+            message = f"{searched_project}"
+            if len(projects) ==1:
+                project = projects[0]
+                form = RatingProjectForm()
+                votes = Vote.get_project_votes(project.id)
+                voters = project.voters
+        except Profile.DoesNotExist:
+            suggestions = Project.display_all_projects()
+            message = f"No projects titled found{searched_project}"
+            return render(request, 'search.html', {"projects": projects,"message": message, "number":number})
+        else:
+            message = "You haven't searched"
+            return render(request, 'search.html', {"message": message})
+
+

@@ -5,13 +5,12 @@
 <link rel="stylesheet" href="{% static 'css/static.css' %}">
 {% endblock%} 
 
-{% block content %} 
-{% if high %} 
-<div class="wrapper" style="background-image: url('{{high.sproject_image.url}}');">
+
+<div class="wrapper" style="background-image: url('{{high.project_image.url}}');">
 <div class="wrapper-top">
     <label>
         Site of the day: Previous Winners<span>{{date}}</span>
     </label>
 </div>
 
-</div>
+
