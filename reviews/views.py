@@ -57,13 +57,9 @@ def profile(request, profile_id):
 
 @login_required(login_url='/accounts/login/') 
 def add_project(request):
+    current_user = request.user
     if request.method == 'POST':
         form = NewProjectForm(request.POST, request.FILES)
-        current_user = request.user
-        try:
-            profile = Profile.objects.get(user = current_user)
-        except Profile.DoesNotExist:
-            raise Http404()
         if form.is_valid():
             project = form.save(commit=False)
             project.profile = profile
