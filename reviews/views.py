@@ -126,5 +126,5 @@ def project(request, project_id):
     except ObjectDoesNotExist:
         raise Http404()
 
-    return render(request, "projects.html", {"project":project})
+    return render(request, "project.html", {"project":project})
   

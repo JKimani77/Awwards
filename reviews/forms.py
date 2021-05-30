@@ -16,4 +16,4 @@ class RatingProjectForm(ModelForm):
     class Meta:
         model = Vote
         exclude = ['pub_date', 'voter', 'project']
-        
+
