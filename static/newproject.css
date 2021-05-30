@@ -12,14 +12,14 @@ body {
     display: flex;
     flex-direction: column;
     width: 65%;
-    color: #fff;
+    color: rgb(73, 59, 59);
     padding: 2%;
     margin-bottom: 9%;
 }
 
 .title {
     text-transform: uppercase;
-    font-weight: 900;
+    font-weight: 400;
     letter-spacing: .1rem;
     font-size: 3rem;
     margin-bottom: 1%;
@@ -30,7 +30,7 @@ hr {
 }
 
 .guide {
-    /* width: 50%; */
+    
     padding: 2% 15%;
     font-size: 1.5rem;
 }
@@ -46,7 +46,7 @@ label {
 .form-control {
     border-bottom: 1px solid #ccc;
     background-color: transparent;
-    color: #fff;
+    color: rgb(24, 53, 20);
 }
 
 .form-control:focus {
@@ -56,17 +56,6 @@ label {
     box-shadow: none !important;
 }
 
-.btn {
-    color: #444;
-    font-weight: 900;
-}
-.btn:hover{
-    background: darkgoldenrod;
-    
-}
-@media (max-width: 425px) {
-    .box{
-        width: 100% !important;
-        margin: 3%;
-    }
-}
+
+
+

@@ -128,12 +128,7 @@ label>span {
     object-fit: cover;
 }
 
-@media (max-width: 425px) {
-    .of-the-day-wrapper {
-        width: 100%;
-        height: 35vh !important;
-    }
-}
+
 
 /* DIVIDER */
 .divider{

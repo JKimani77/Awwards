@@ -77,23 +77,14 @@ def add_project(request):
 def search_project(request):
     if "project" in request.GET and request.GET["project"]:
         searched_project = request.GET.get("project")
-        voted = False
-        try:
-            projects = Project.search_project(searched_project)
-            number = projects.number()
-            message = f"{searched_project}"
-            if len(projects) ==1:
-                project = projects[0]
-                form = RatingProjectForm()
-                votes = Vote.get_project_votes(project.id)
-                voters = project.voters
-        except Profile.DoesNotExist:
-            suggestions = Project.display_all_projects()
-            message = f"No projects titled found{searched_project}"
-            return render(request, 'search.html', {"projects": projects,"message": message, "number":number})
-        else:
-            message = "You haven't searched"
-            return render(request, 'search.html', {"message": message})
+        message = f"{search_project}"
+
+        return render(request, 'search.html', {"projects": search_project,"message": message, })
+    else:
+        message = "you haven't searched for any term"
+        return render(request, 'search.html', {"message": message})
+
+       
 
 @login_required(login_url='/accounts/login/')
 def rating_project(request,project_id):
