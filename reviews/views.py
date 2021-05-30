@@ -6,6 +6,7 @@ from .models import Profile, Project, Vote
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -115,4 +116,15 @@ def rating_project(request,project_id):
     else:
         form = RatingProjectForm()
     return render(request, 'project.html', {'form':form})
-    
+
+@login_required(login_url='/accounts/login')
+def project(request, project_id):
+
+    try:
+        project = Project.objects.get(pk = id)
+        
+    except ObjectDoesNotExist:
+        raise Http404()
+
+    return render(request, "projects.html", {"project":project})
+  
