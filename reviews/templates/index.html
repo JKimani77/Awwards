@@ -18,10 +18,10 @@
 		<a href="{% url 'project' highest.id %}">{{highest.name}}</a>
 		<div class="owner-info">BY <a href="{% url 'profile' highest.profile.user.id %}">{{highest.profile.user.username}}</a> FROM BY {{highest.profile.location}}</div>
 		<div class="d-flex">
-			<div id="average">{{highest.average_score | floatformat:0}}<span>average</span></div>
-			<div class="design">{{highest.average_design | floatformat:0}}<span>design</span></div>
-			<div class="usability">{{highest.average_usability | floatformat:0}}<span>usability</span></div>
-			<div class="content">{{highest.average_content | floatformat:0}}<span>content</span></div>
+			<div id="average">{{highest.score | floatformat:0}}<span>average</span></div>
+			<div class="design">{{highest.design | floatformat:0}}<span>design</span></div>
+			<div class="usability">{{highest.usability | floatformat:0}}<span>usability</span></div>
+			<div class="content">{{highest.content | floatformat:0}}<span>content</span></div>
 		</div>
 	</div>
 	<div class="of-the-day-wrapper-bottom">
@@ -32,7 +32,7 @@
 </div>
 {%endif%}
 
-<div class="text-left divider">
+<div class="text">
 	Submissions | <span> We need your vote</span>
 </div>
 {% if projects %}
@@ -76,5 +76,5 @@
 {% endblock %}
 {% block scripts %}
 {{ block.super}}
-<script src=" {% static 'js/card.js' %}"></script>
+<script src=" {% static 'js/script.js' %}"></script>
 {% endblock %}
