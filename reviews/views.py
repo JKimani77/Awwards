@@ -7,85 +7,80 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 
 # Create your views here.
-@login_required(login_url='/accounts/login/')
 def index(request):
-    title = 'Awwards'
     date = dt.date.today()
     projects = Project.display_all_projects()
-    projects_scores = projects
-    high_score = None
-    high_votes = None
-    if len(projects) >=1:
-        high_score = projects_scores[0]
-        votes = Vote.get_project_votes(high_score.id)
-        high_votes = votes[:3]
-    return render(request, 'index.html', {'date': date, 'title': title,'high':high_score, 'votes': high_votes})
+    
 
-def create_profile(request):
-    current_user = request.user
-    title = 'Create Profile'
-    if request.method =='POST':
-        form = CreateProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = current_user
-            profile.save()
-        return HttpResponseRedirect('/')
+    return render(request, 'index.html', {"date": date, "projects":projects})
+
+    
+@login_required(login_url='/accounts/login/')
+def search_projects(request):
+    if 'keyword' in request.GET and request.GET["keyword"]:
+        search_term = request.GET.get("keyword")
+        searched_projects = Project.search_projects(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html', {"message":message,"projects": searched_projects})
+
     else:
-        form = CreateProfileForm()
-    return render(request, 'create_profile.html', {'form': form, 'title':title})
+        message = "You haven't searched for any term"
+        return render(request, 'search.html', {"message": message})
+
+
+def get_project(request, id):
+
+    try:
+        project = Project.objects.get(pk = id)
+        
+    except ObjectDoesNotExist:
+        raise Http404()
+    
+    
+    return render(request, "project.html", {"project":project})
+  
 
 @login_required(login_url='/accounts/login/')
-def profile(request, profile_id):
-    try:
-        user = User.objects.get(pk = profile_id)
-        profile = Profile.objects.get(user = user)
-        title = profile.user.username
-        projects = Project.get_user_projects(profile_id)
-        projects_number = projects.number()
-        votes = []
-        for project in projects:
-            votes.append(project.average_score)
-        total_v = sum(votes)
-        average = 0
-        if len(projects)>1:
-            average = total_v / len(projects)
-    except Profile.DoesNotExist:
-        raise Http404()
-    return render(request, 'profile.html',{'profile': profile, 'projects': projects, 'number': projects_number, 'votes':total_v, 'average':average,'title': title})
-
-@login_required(login_url='/accounts/login/') 
-def add_project(request):
+def new_project(request):
     current_user = request.user
     if request.method == 'POST':
         form = NewProjectForm(request.POST, request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
-            project.profile = profile
+            project.Author = current_user
             project.save()
         return redirect('index')
+
     else:
         form = NewProjectForm()
-    return render(request, 'add_new_project.html', {'form': form})
+    return render(request, 'add_new_project.html', {"form": form})
+
 
 @login_required(login_url='/accounts/login/')
-def search_project(request):
-    if "project" in request.GET and request.GET["project"]:
-        searched_project = request.GET.get("project")
-        message = f"{search_project}"
-
-        return render(request, 'search.html', {"projects": search_project,"message": message, })
+def user_profiles(request):
+    current_user = request.user
+    Author = current_user
+    projects = Project.get_by_author(Author)
+    
+    if request.method == 'POST':
+        form = CreateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.save()
+        return redirect('profile')
+        
     else:
-        message = "you haven't searched for any term"
-        return render(request, 'search.html', {"message": message})
-
-       
+        form = CreateProfileForm()
+    
+    return render(request, 'profile.html', {"form":form, "projects":projects})
 
 @login_required(login_url='/accounts/login/')
-def rating_project(request,project_id):
-    if request.method =="POST":
+def rate_project(request,project_id):
+    if request.method == "POST":
         form = RatingProjectForm(request.POST)
         project = Project.objects.get(pk = project_id)
         current_user = request.user
@@ -94,24 +89,13 @@ def rating_project(request,project_id):
             profile = Profile.objects.get(user = user)
         except Profile.DoesNotExist:
             raise Http404()
-        
+
         if form.is_valid():
-            vote = form.save(commit=False)
+            vote = form.save(commit= False)
             vote.voter = profile
             vote.project = project
             vote.save_vote()
-            return HttpResponseRedirect(reverse('project', args =[int(project_id)]))
+            return HttpResponseRedirect(reverse('project', args =[int(project.id)]))
     else:
         form = RatingProjectForm()
-    return render(request, 'project.html', {'form':form})
-
-@login_required(login_url='/accounts/login')
-def project(request, project_id):
-    try:
-        project = Project.objects.get(pk = id)
-        
-    except ObjectDoesNotExist:
-        raise Http404()
-
-    return render(request, "project.html", {"project":project})
-  
+    return render(request, 'project.html', {"form": form})
