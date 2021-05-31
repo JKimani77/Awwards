@@ -5,9 +5,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name= 'index'),
-    path('search/', views.search_projects, name='search_results'),
-    path('project/', views.get_project, name='project_results'),
-    path('new/project', views.new_project, name='new-project'),
-    path('accounts/profile/', views.user_profiles, name='profile'),
-    path('rate_project/<project_id>',views.rate_project, name = 'rate_project'),
+    path('search_projects/', views.search_projects, name='search_results'),
+    path('project/(\d+)', views.get_project, name='project_results'),
+    path('new/project', views.new_project, name='new_project'),
+    path('profile/', views.user_profiles, name='profile'),
+    path('ratings/',include('star_ratings.urls', namespace='ratings')),
 ]
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

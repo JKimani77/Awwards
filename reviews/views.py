@@ -13,11 +13,9 @@ from django.conf import settings
 def index(request):
     date = dt.date.today()
     projects = Project.display_all_projects()
-    
 
     return render(request, 'index.html', {"date": date, "projects":projects})
 
-    
 @login_required(login_url='/accounts/login/')
 def search_projects(request):
     if 'keyword' in request.GET and request.GET["keyword"]:
@@ -33,15 +31,13 @@ def search_projects(request):
 
 
 def get_project(request, id):
-
+    project = Project.objects.get(pk = id)
     try:
-        project = Project.objects.get(pk = id)
-        
+        user = User.objects.get(pk = request.user.id)
+        profile = Profile.objects.get(user = user)
     except ObjectDoesNotExist:
         raise Http404()
-    
-    
-    return render(request, "project.html", {"project":project})
+    return render(request, "project.html", {"project":project, 'profile':profile})
   
 
 @login_required(login_url='/accounts/login/')
@@ -64,7 +60,7 @@ def new_project(request):
 def user_profiles(request):
     current_user = request.user
     Author = current_user
-    projects = Project.get_by_author(Author)
+    projects = Project
     
     if request.method == 'POST':
         form = CreateProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -76,26 +72,5 @@ def user_profiles(request):
     else:
         form = CreateProfileForm()
     
-    return render(request, 'profile.html', {"form":form, "projects":projects})
+    return render(request, 'profile.html', {"form":form})
 
-@login_required(login_url='/accounts/login/')
-def rate_project(request,project_id):
-    if request.method == "POST":
-        form = RatingProjectForm(request.POST)
-        project = Project.objects.get(pk = project_id)
-        current_user = request.user
-        try:
-            user = User.objects.get(pk = current_user.id)
-            profile = Profile.objects.get(user = user)
-        except Profile.DoesNotExist:
-            raise Http404()
-
-        if form.is_valid():
-            vote = form.save(commit= False)
-            vote.voter = profile
-            vote.project = project
-            vote.save_vote()
-            return HttpResponseRedirect(reverse('project', args =[int(project.id)]))
-    else:
-        form = RatingProjectForm()
-    return render(request, 'project.html', {"form": form})

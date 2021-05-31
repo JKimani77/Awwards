@@ -1,12 +1,10 @@
 {%extends 'base.html'%}
-
 {% load bootstrap3%}
 {% load ratings %}
-
 {% block content %}
+
 <div class="container">
   <div class="row mt-4"></div>
-  <!-- Grid row -->
   <div class="row">
 
     <!-- Grid column -->
@@ -24,7 +22,8 @@
           <img class="card-img-top" src="https://source.unsplash.com/1600x900/?fun,vacation"
             alt="{{ project.project_name }}">
           {% endif %}
-          <a href="#!">
+          
+          <a href="/#!" onclick="openTab(event)">
             <div class="mask rgba-white-slight">
               <div class="d-flex justify-content-end">
                 <a href="{{project.link}}" target="_blank" title="Visit site"> <button type="button"
@@ -42,7 +41,6 @@
           <!-- Data -->
           <h4 class="">{{ project.project_description }}</h4>
 
-          <!-- Social shares -->
           <div>
             <a href="{{project.link}}" target="_blank" title="Visit site">
               <button type="button" class="btn btn-default font-weight-bold px-3">Visit website</button></a>
@@ -50,7 +48,7 @@
           <div class="mt-2 pt-2">
             <h4>Vote</h4>
           </div>
-          {%ratings project %}
+          {%rating project %}
 
 
           <div class="row">
@@ -69,13 +67,13 @@
 
         <!-- Card footer -->
         <div class="card-footer bg-white">
-          <h5 class="pt-2">CREDITS</h5>
+          <h5 class="pt-2">Credits</h5>
 
           <hr>
 
           <small class="font-weight-bold ml-2"><img src="{{ project.Author.profile.photo.url }}" alt=""
               class="rounded-circle img-fluid mr-1" style="width: 50px;">
-            BY {{project.Author.first_name|upper}} 
+            By {{project.Author.first_name|upper}} 
         </div>
 
       </div>
