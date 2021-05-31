@@ -11,5 +11,4 @@ urlpatterns = [
     path('project/<project_id>', views.project, name='project'),
     path('search_project/',views.search_project,name = 'search_project'),
     path('rating_project/<project_id>', views.rating_project, name = 'rating_project'),
-    
 ]

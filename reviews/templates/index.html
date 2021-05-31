@@ -1,13 +1,9 @@
 {%extends 'base.html'%}
-{% load static %}
-{% block styles %}
-{{ block.super}}
-<link rel="stylesheet" href="{% static 'index.css' %}">
-{% endblock %}
+
 
 {% block content %}
 
-<div style="background:url('https://source.unsplash.com/user/erondu'); height: 70vh; background-size: cover; background-position: center;"> 
+<div style="background:url('https://images.pexels.com/photos/2098578/pexels-photo-2098578.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); height: 70vh; background-size: cover; background-position: center;"> 
 
     <div id="intro">
         
@@ -24,7 +20,7 @@
   
                         <!-- Divider -->
                         <hr class="hr-light">
-                        <p class="font-weight-bold white-text" style="font-size: 30px;">Are the Website Awards that recognize and promote the talent and effort of the best developers, designers and web agencies in the world.</p>
+                        <p class="font-weight-bold white-text" style="font-size: 30px;">The awards of design, creativity and innovation on the internet</p>
                        
                     </div>
   
@@ -45,81 +41,59 @@
     <div class="mb-2 pb-2 pl-4 pr-2 ml-4 mr-1">
         <h4 class="display-6 font-weight-bold" style="font-size:40px;"> Sites of the day </h4>
     </div>
+
+    <div class="row pl-2 pr-2 ml-1 mr-1">
+        {% for project_item in projects %}
+            <div class="col-lg-4">
+                <div class="card-deck">
+                
+                    <div class="card mb-2 mt-2">
+                      <!-- Card image -->
+                    <div class="view overlay zoom">
+                        {% if project_item.project_image %}
+                        <a href="/project/{{project_item.id}}">
+                        <img class="card-img-top" src="{{project_item.project_image.url}}" alt="{{ project_item.project_name }}" height="300px">
+                        </a>
+                        {% else %}
+                        <a href="/project/{{project_item.id}}">
+                        <img  class="card-img-top" src="https://source.unsplash.com/1600x900/?fun,vacation" alt="{{ project_item.project_name }}">
+                        </a>
+                        {% endif %}
+                        
+                        <a href="/project/{{project_item.id}}">
+                          <div class="mask rgba-black-light">
+                             
+                          </div>
+                        </a>
+                      </div>
+                
+                      <div class="card-body pr-2 pl-2 pr-2 mr-2">
+                        <h5 class="card-title ml-4">{{ project_item.project_title }}</h5>
+                        <div class="row ml-2">
+                          <div class="col-lg-6 dark-text"> <small> <span class="mr-1"> From {{project_item.country.name}}</span> <img src="{{project_item.country.flag}}" alt=" {{project_item.country.name}} flag">  </small> </div>
+                          <div class="col-lg-6 dark-text d-flex justify-content-end"> <small> {{project_item.pub_date|date:"d /m/Y"}} </small> </div>
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <small class="text-muted ml-2"><img src="{{ project_item.Author.profile.photo.url }}" alt="" class="rounded-circle img-fluid mr-1" style="width: 30px;">
+                        BY {{project_item.Author.first_name|upper}} </small>
+                      </div>
+                    </div>
+                  
+                
+                  </div>
+                <!-- end of card deck  -->
+
+            </div>
+      {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
   
 
 
 
 
 
-<!-- {% if highest %}
-<div class="of-the-day-wrapper"
-	style="background-image: url('{{highest.screenshot.url}}');">
-	<div class="of-the-day-wrapper-top">
-		<label>
-			Site of the day <span>{{date}}</span>
-		</label>
-	</div>
-	<div class="of-the-day-wrapper-middle">
-		<a href="{% url 'project' high.id %}">{{highest.name}}</a>
-		<div class="owner-info">BY <a href="{% url 'profile' high.profile.user.id %}">{{highest.profile.user.username}}</a> FROM BY {{highest.profile.location}}</div>
-		<div class="d-flex">
-			<div id="average">{{highest.score | floatformat:0}}<span>average</span></div>
-			<div class="design">{{highest.design | floatformat:0}}<span>design</span></div>
-			<div class="usability">{{highest.usability | floatformat:0}}<span>usability</span></div>
-			<div class="content">{{highest.content | floatformat:0}}<span>content</span></div>
-		</div>
-	</div>
-	<div class="of-the-day-wrapper-bottom">
-		<div class="voters">
-			<a href="{% url 'profile' high.profile.user.id %}"><img src="{{highest.profile.profile_pic.url}}"></a>			
-		</div>
-	</div>
-</div>
-{%endif%}
-
-<div class="text">
-	Submissions | <span> We need your vote</span>
-</div>
-{% if projects %}
-<div class="submissions-wrapper">
-	{% for project in projects %}
-	<div class="col-md-4">
-		<div class="card radius shadowDepth1">
-			<div class="card__image border-tlr-radius">
-				<a href="{% url 'project' project.id %}"><img src="{{project.screenshot.url}}"
-					alt="image" class="border-tlr-radius"></a>
-			</div>
-			<div class="card__content card__padding">
-				<div class="card__share">
-					<a id="share" class="share-icon" href="{{project.link}}" target="_blank"><i class="fas fa-share"></i></a>
-				</div>
-				<div class="card__meta">
-					{%if project.average_score != 0.0 %}
-					<a href="#">{{project.average_score | floatformat:0}}</a>
-					{%else%}
-					{% endif %}
-					<time>{{project.post_date}}</time>
-				</div>
-				<article class="card__article">
-					<h3><a href="{% url 'project' project.id %}">{{project.name}}</a></h3>
-					<p>{{project.description}}</p>
-				</article>
-			</div>
-			<div class="card__action">
-				<div class="card__author">
-					<img src="{{project.profile.profile_pic.url}}" alt="user">
-					<div class="card__author-content">
-						By <a href="{% url 'profile' project.profile.user.id %}">{{project.profile.user.username}}</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endfor %}
-</div>
-{%endif%}
-{% endblock %}
-{% block scripts %}
-{{ block.super}}
-<script src=" {% static 'js/script.js' %}"></script>
-{% endblock %} -->
