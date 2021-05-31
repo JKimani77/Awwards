@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {% load bootstrap3%}
+
 {% load ratings %}
 {% block content %}
 
@@ -23,7 +24,7 @@
             alt="{{ project.project_name }}">
           {% endif %}
           
-          <a href="/#!" onclick="openTab(event)">
+          <a href="#!">
             <div class="mask rgba-white-slight">
               <div class="d-flex justify-content-end">
                 <a href="{{project.link}}" target="_blank" title="Visit site"> <button type="button"
@@ -45,15 +46,25 @@
             <a href="{{project.link}}" target="_blank" title="Visit site">
               <button type="button" class="btn btn-default font-weight-bold px-3">Visit website</button></a>
           </div>
-          <div class="mt-2 pt-2">
-            <h4>Vote</h4>
-          </div>
-          {%rating project %}
-
-
-          <div class="row">
-            
+         <div class="mt-2 pt-2">
+              <h4>Vote on the following:</h4>
+        </div> 
+        <div class="container.col-md-12">
+          <!-- DESIGN -->
+          <h4>Design</h4>
+          {%ratings project %}
+<br>
+          
+          <!-- USABILITY -->
+          <h4> Usability</h4>
+          {%ratings project %}
+<br>
+          <!-- CONTENT -->
+          <h4> Content</h4>
+          {%ratings project %}
+</div>
             <div class="col-lg-6 dark-text"> <small> Date Posted: {{project.pub_date|date:"d /m/Y"}} </small> </div>
+          </div>
           </div>
           <!-- {{s_start_user}} -->
         </div>
@@ -71,9 +82,9 @@
 
           <hr>
 
-          <small class="font-weight-bold ml-2"><img src="{{ project.Author.profile.photo.url }}" alt=""
+          <small class="font-weight-bold ml-2"><img src="{{ project.profile.photo.url }}" alt=""
               class="rounded-circle img-fluid mr-1" style="width: 50px;">
-            By {{project.Author.first_name|upper}} 
+            By {{user.username|upper}} 
         </div>
 
       </div>

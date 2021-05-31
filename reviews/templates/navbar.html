@@ -1,6 +1,6 @@
 <nav class="pl-5 pr-5 navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand font-weight-bold title" href="{% url 'index' %}"style="font: size 20px; font-weigth:bold">a<span>WWW</span>ards</a></span></spam>Awwards</a>
+        <a class="navbar-brand font-weight-bold title" href="{% url 'index' %}"style="font: size 20px; font-weigth:bold">Home</a>
       <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
     aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,9 +11,7 @@
     <div class="collapse navbar-collapse" id="basicExampleNav">
       <!-- Links -->
       <ul class="navbar-nav mr-auto">
-          <li class="text-white nav-item">
-            <a class="nav-link" href="{% url 'index' %}" style="font-size: 20px; font-weight:bold">Home</a>
-          </li>
+          
           
         </li>
         {% if user.is_authenticated %}

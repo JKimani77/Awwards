@@ -46,7 +46,7 @@ class Project(models.Model):
         self.delete()
 
     @classmethod
-    def get_projects(cls):
+    def display_all_projects(cls):
         projects = cls.objects.all()
         return projects
 

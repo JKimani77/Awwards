@@ -21,27 +21,28 @@
       {% include "navbar.html" %}
 
     <div class="jumbotron jumbotron-fluid bg-light pb-3 pt-3">
-            
-       <h2 class="display-5 text-center font-weight-bold"> Submit Your Website </h2>
-    
+        
+        <h2 class="display-5 text-center font-weight-bold"> Submit Your Website </h2>
+        
     </div>      
-
-  <div class="row">
-      <!-- Empty div -->
-      <div class="col-lg-3"></div>
-
-      <div class="col-lg-6 pt-2 ">
-            <form  action="{%url 'new_project'%}" method="post" enctype="multipart/form-data">
-              {%csrf_token%}
-
-              {% bootstrap_form form%}
-              <input type="submit" class="btn btn-success btn-lg font-weight-bold" value="SUBMIT">
-            </form>
-      </div>
-
-      <div class="col-lg-3"></div>
     
-  </div>
+    <div style="background:url('https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')"> 
+    <div class="row">
+        <!-- Empty div -->
+        <div class="col-lg-3"></div>
+        
+        <div class="col-lg-6 pt-2 ">
+            <form  action="{%url 'new_project'%}" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                
+                {% bootstrap_form form%}
+                <input type="submit" class="btn btn-success btn-lg font-weight-bold" value="SUBMIT">
+            </form>
+        </div>
+        
+        <div class="col-lg-3"></div>
+        
+    </div>
 
 
    {% block scripts %}

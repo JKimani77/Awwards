@@ -17,7 +17,7 @@
   
                         <!-- Divider -->
                         <hr class="hr-light">
-                        <p class="font-weight-bold white-text" style="font-size: 30px;">The awards of design, creativity and innovation on the internet</p>
+                        <p class="font-weight-bold white-text" style="font-size: 30px;">The awards of Design, Creativity and Innovation on the internet</p>
                        
                     </div>
   
@@ -35,6 +35,8 @@
   
   <!-- end of landing layout -->
   <div class="container-fluid">
+    <div style="background:url('https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')"> 
+
     <div class="mb-2 pb-2 pl-4 pr-2 ml-4 mr-1">
         <h4 class="display-6 font-weight-bold" style="font-size:40px;"> Sites of the day </h4>
     </div>
@@ -49,7 +51,7 @@
                     <div class="view overlay zoom">
                         {% if project_item.project_image %}
                         <a href="/project/{{project_item.id}}">
-                        <img class="card-img-top" src="{{project_item.project_image.url}}" alt="{{ project_item.project_name }}" height="300px">
+                        <img class="card-img-top" src="{{project_item.project_image.url}}" alt="{{ project_item.project_name }}" height="200px">
                         </a>
                         {% else %}
                         <a href="/project/{{project_item.id}}">
@@ -71,7 +73,7 @@
                         </div>
                       </div>
                       <div class="card-footer">
-                        By:{{user.username}} </small>
+                        By:{{user.username|upper}} </small>
                       </div>
                     </div>
                   

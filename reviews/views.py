@@ -30,14 +30,12 @@ def search_projects(request):
         return render(request, 'search.html', {"message": message})
 
 
-def get_project(request, id):
+def display_all_project(request, project_id):
     try:
-        project = Project.objects.get(pk = id)
-        user = User.objects.get(pk = request.user.id)
-        profile = Profile.objects.get(user = user)
+        project = Project.objects.get(pk = project_id)
     except ObjectDoesNotExist:
         raise Http404()
-    return render(request, "project.html", {"project":project, 'profile':profile})
+    return render(request, "project.html", {"project":project})
   
 
 @login_required(login_url='/accounts/login/')

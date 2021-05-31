@@ -1,10 +1,7 @@
 {%extends 'base.html'%} 
 {% load bootstrap3 %}
-
 {% block content %}
-
 <div class="">
-
   <div class="">
     {% if projects %}
     <div class="jumbotron jumbotron-fluid bg-light">
@@ -29,44 +26,44 @@
     
         <div class="row pl-2 pr-2 ml-1 mr-1">
             {% for project_item in projects %}
-                <div class="col-lg-3">
-                    <div class="card-deck">
-                    
-                        <div class="card">
-                          <!-- Card image -->
-                        <div class="view overlay zoom">
-                            {% if project_item.project_image %}
-                            <a href="/project/{{project_item.id}}">
-                            <img class="card-img-top" src="{{project_item.project_image.url}}" alt="{{ project_item.project_name }}" height="300px">
-                            </a>
-                            {% else %}
-                            <a href="/project/{{project_item.id}}">
-                            <img  class="card-img-top" src="https://source.unsplash.com/1600x900/?fun,vacation" alt="{{ project_item.project_name }}">
-                            </a>
-                            {% endif %}
-                            
-                            <a href="/project/{{project_item.id}}">
-                              <div class="mask rgba-black-light">
-                                  
-                              </div>
-                            </a>
+            <div class="container">
+                <div class="row mt-4"></div>
+                <div class="row">
+              
+                  <!-- Grid column -->
+                  <div class="col-lg-12">
+              
+                    <!-- Card -->
+                    <div class="card card-cascade wider reverse">
+              
+                      <!-- Card image -->
+                      <div class="view view-cascade overlay">
+                        {% if project.project_image %}
+                        <img class="card-img-top" src="{{project.project_image.url}}" alt="{{ project.project_name }}"
+                         style="max-height: 500px;">
+                        {% else %}
+                        <img class="card-img-top" src="https://source.unsplash.com/1600x900/?fun,vacation"
+                          alt="{{ project.project_name }}">
+                        {% endif %}
+                        
+                        <a href="#!">
+                          <div class="mask rgba-white-slight">
+                            <div class="d-flex justify-content-end">
+                              <a href="{{project.link}}" target="_blank" title="Visit site"> <button type="button"
+                                  class="btn btn-light px-3"><i class="fas fa-directions" aria-hidden="true"></i></button>
+                              </a></div>
                           </div>
-                    
-                          <div class="card-body pr-2 pl-2 pr-2 mr-2">
-                            <h5 class="card-title ml-4">{{ project_item.project_title }}</h5>
-                            <div class="row ml-2">
-                              <div class="col-lg-6 dark-text"> <small> <span class="mr-1"> From {{project_item.country.name}}</span> <img src="{{project_item.country.flag}}" alt=" {{project_item.country.name}} flag">  </small> </div>
-                              <div class="col-lg-6 dark-text d-flex justify-content-end"> <small> {{project_item.pub_date|date:"d /m/Y"}} </small> </div>
-                            </div>
-                          </div>
-                          <div class="card-footer">
-                            <small class="text-muted ml-2"><img src="{{ project_item.Author.profile.photo.url }}" alt="" class="rounded-circle img-fluid mr-1" style="width: 30px;">
-                            BY {{project_item.Author.first_name|upper}} </small>
-                          </div>
-                        </div>
-                      
-                    
+                        </a>
                       </div>
+              
+                      <!-- Card content -->
+                      <div class="card-body card-body-cascade text-center">
+              
+                        <!-- Title -->
+                        <h2 class="font-weight-bold"><a>{{ project.project_title }}</a></h2>
+                        <!-- Data -->
+                        <h4 class="">{{ project.project_description }}</h4>
+              
                     <!-- end of card deck  -->
     
                 </div>
