@@ -14,12 +14,14 @@ def index(request):
     title = 'Awwards'
     date = dt.date.today()
     projects = Project.display_all_projects()
+    projects_scores = projects
+    high_score = None
     high_votes = None
-    if len(projects)>=1:
-        votes = Vote.get_project_votes
+    if len(projects) >=1:
+        high_score = projects_scores[0]
+        votes = Vote.get_project_votes(high_score.id)
         high_votes = votes[:3]
-
-    return render(request, 'index.html', {'date': date, 'title': title, "projects":projects,})
+    return render(request, 'index.html', {'date': date, 'title': title,'high':high_score, 'votes': high_votes})
 
 def create_profile(request):
     current_user = request.user
@@ -27,13 +29,12 @@ def create_profile(request):
     if request.method =='POST':
         form = CreateProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            profile = form.save
+            profile = form.save(commit=False)
             profile.user = current_user
             profile.save()
         return HttpResponseRedirect('/')
     else:
         form = CreateProfileForm()
-
     return render(request, 'create_profile.html', {'form': form, 'title':title})
 
 @login_required(login_url='/accounts/login/')
@@ -43,17 +44,17 @@ def profile(request, profile_id):
         profile = Profile.objects.get(user = user)
         title = profile.user.username
         projects = Project.get_user_projects(profile_id)
-        projects_count = projects.count()
+        projects_number = projects.number()
         votes = []
         for project in projects:
             votes.append(project.average_score)
         total_v = sum(votes)
         average = 0
         if len(projects)>1:
-            average = total_v/len(projects)
+            average = total_v / len(projects)
     except Profile.DoesNotExist:
         raise Http404()
-    return render(request, 'profile.html', {'profile':profile, 'projects': projects,'votes': votes, 'average': average, 'total_v':total_v})
+    return render(request, 'profile.html',{'profile': profile, 'projects': projects, 'number': projects_number, 'votes':total_v, 'average':average,'title': title})
 
 @login_required(login_url='/accounts/login/') 
 def add_project(request):
@@ -106,7 +107,6 @@ def rating_project(request,project_id):
 
 @login_required(login_url='/accounts/login')
 def project(request, project_id):
-
     try:
         project = Project.objects.get(pk = id)
         
