@@ -29,7 +29,6 @@ def search_projects(request):
         message = "You haven't searched for any term"
         return render(request, 'search.html', {"message": message})
 
-
 def display_all_project(request, project_id):
     try:
         project = Project.objects.get(pk = project_id)

@@ -6,18 +6,19 @@ Maryam Muchai
 * The application allows a user to post a project he/she has created and get it reviewed by his/her peers.
 ### User Story
 * Users need to Sign in to the application to post projects and review projects.
-
+![Screenshot from 2021-05-31 23-15-05](https://user-images.githubusercontent.com/78798386/120239319-b2f84580-c266-11eb-9ecf-db3c8966c092.png)
 * Users can view different projects and their details.
-
+![Screenshot from 2021-05-31 23-23-30](https://user-images.githubusercontent.com/78798386/120239632-5a757800-c267-11eb-95b0-7e0e5b358224.png)
 * Users can post a project to be rated/viewed.
-
+![Screenshot from 2021-05-31 23-16-04](https://user-images.githubusercontent.com/78798386/120239498-184c3680-c267-11eb-97b8-d8ea515b8f1a.png)
 * Users can search for different projects.
 
 * Users can view projects overall score.
 
 * Users can view their profile page with all their published projects.
-
+![Screenshot from 2021-05-31 23-16-20](https://user-images.githubusercontent.com/78798386/120239396-dcb16c80-c266-11eb-8001-ee6900f78a20.png)
 * Users can rate/review other users' projects.
+![Screenshot from 2021-05-31 23-15-41](https://user-images.githubusercontent.com/78798386/120239448-f9e63b00-c266-11eb-9839-6a88b027e76c.png)
 ### Setup/Installation
 1. Clone this repo: git clone 
 
