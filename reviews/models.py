@@ -2,8 +2,10 @@ import cloudinary
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
-from django.db.models.fields import IntegerField
-from django.db.models.lookups import IntegerGreaterThanOrEqual
+from star_ratings.models import Rating
+from django.http import Http404
+from django.db.models import ObjectDoesNotExist 
+
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -43,20 +45,32 @@ class Project(models.Model):
     def delete_project(self):
         self.delete()
 
-    def voters_count(self):
-        return self.voters.count()
-
     @classmethod
-    def display_all_projects(cls):
-        return cls.objects.all()
+    def get_projects(cls):
+        projects = cls.objects.all()
+        return projects
 
     @classmethod
     def get_user_projects(cls,profile):
         return cls.objects.filter(profile=profile)
 
     @classmethod
-    def search_project(cls,name):
-        return Project.objects.filter(name__icontains = name)
+    def search_project(cls,search_term):
+        projects = cls.objects.filter(project_title__icontains=search_term)
+        return projects
+
+    @classmethod
+    def get_project(request, id):
+        try:
+            project = Project.objecs.get(pk = id)
+
+        except ObjectDoesNotExist:
+            raise Http404()
+        
+        return project
+
+    def __str__(self):
+        return self.project_title
 
     class Meta:
         ordering = ['-pub_date']

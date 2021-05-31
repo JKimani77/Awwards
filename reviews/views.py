@@ -31,8 +31,8 @@ def search_projects(request):
 
 
 def get_project(request, id):
-    project = Project.objects.get(pk = id)
     try:
+        project = Project.objects.get(pk = id)
         user = User.objects.get(pk = request.user.id)
         profile = Profile.objects.get(user = user)
     except ObjectDoesNotExist:

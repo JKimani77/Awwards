@@ -9,7 +9,7 @@ urlpatterns = [
     path('project/(\d+)', views.get_project, name='project_results'),
     path('new/project', views.new_project, name='new_project'),
     path('profile/', views.user_profiles, name='profile'),
-    path('ratings/',include('star_ratings.urls', namespace='ratings')),
+    path('ratings/',include('star_ratings.urls')),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
