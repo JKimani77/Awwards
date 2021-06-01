@@ -1,3 +1,4 @@
+from reviews.models import Project
 from django.urls import path,include
 from . import views
 from django.conf import settings
@@ -14,6 +15,9 @@ urlpatterns = [
     path('profile/', views.user_profiles, name='profile'),
     path('ratings/',include('star_ratings.urls',namespace='ratings')),
     
+    path('api/project/', views.ProjectList.as_view()),
+    path('api/profile/', views.ProfileList.as_view()),
+
     path('accounts/register/',
         RegistrationView.as_view(success_url='/'),
         name='django_registration_register'),
