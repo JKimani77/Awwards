@@ -1,4 +1,4 @@
-{%extends "registration/base.html"%}
+{%extends "django_registration/base.html"%}
 {% load static %}
 {%load bootstrap3 %}
 {% block content %}
@@ -19,7 +19,6 @@
           <a href="/">a<span>WWW</span>ards.</a>
         </div>
         <h2 class="spacer"></h2>
-        <img class="award" src="{% static 'images/award.png' %}"/>
         <p class="account">don't have an account?</p>
         <a href="/accounts/register/"><button class="button signup">sign up</button></a>
       </div>

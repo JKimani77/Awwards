@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'star_ratings',
     'reviews.apps.ReviewsConfig',
     'bootstrap3',

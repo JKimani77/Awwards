@@ -25,7 +25,7 @@ urlpatterns = [
     path('', include('reviews.urls')),
 
     path('accounts/register/',
-        RegistrationView.as_view(success_url='/profile/'),
+        RegistrationView.as_view(success_url='/'),
         name='django_registration_register'),
 
     path('accounts/', include('django.contrib.auth.urls')),

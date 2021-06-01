@@ -32,7 +32,6 @@ class Project(models.Model):
     project_image = CloudinaryField(' screenshot')
     project_description = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True, null=True)
-    voters = models.IntegerField(default=0)
     link = models.URLField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, default='1')
 
