@@ -8,7 +8,9 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-
+from .serializer import ProfileSerializer, ProjectSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 # Create your views here.
 def index(request):
     date = dt.date.today()
@@ -71,3 +73,15 @@ def user_profiles(request):
     
     return render(request, 'profile.html', {"form":form})
 
+class ProjectList(APIView):
+    def get(self, request, format=None):
+        all_project = Project.objects.all()
+        serializers = ProjectSerializer(all_project, many=True)
+        return Response(serializers.data)
+
+class ProfileList(APIView):
+    def get(self, request, format=None):
+        all_profile = Profile.objects.all()
+        serializers = ProfileSerializer(all_profile, many=True)
+        return Response(serializers.data)
+    
