@@ -11,6 +11,8 @@ from django.conf import settings
 from .serializer import ProfileSerializer, ProjectSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from reviews import serializer
 # Create your views here.
 def index(request):
     date = dt.date.today()
@@ -83,5 +85,6 @@ class ProfileList(APIView):
     def get(self, request, format=None):
         all_profile = Profile.objects.all()
         serializers = ProfileSerializer(all_profile, many=True)
+        print(serializers.data)
         return Response(serializers.data)
     

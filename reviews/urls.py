@@ -25,6 +25,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('logout/',auth_views.LogoutView.as_view()),
+    
+    #path('logout/', auth_views.LogoutView.as_view(template_name='accounts/login'), name='logout'),
 
 ]
 if settings.DEBUG:
